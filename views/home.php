@@ -8,6 +8,7 @@
     <link rel='stylesheet' href='./Styles/bootstrap.min.css' />
     <link rel='stylesheet' href='./Styles/bootstrap.css' />
     
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>    
     <!-- <link rel="icon" type="image/png" href="my_site_icon.png" sizes="16x16"> -->
 </head>
 
@@ -15,7 +16,7 @@
     
     <!-- navigation bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.html">SOCIAL</a>
+        <a class="navbar-brand" onclick="logo()">HOGWARTS COMMON ROOM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,9 +26,9 @@
         </div>
 
         <div class="col-md-2 offset-md-2">
-            <img src="profile-photo.jpg" height="50px"/>
+            <a href="profile.php"><img src="profile-photo.jpg" height="50px"/></a>
             &nbsp;&nbsp;
-            <label id="usrname"></label>
+            <a href="profile.php"><label id="usrname"></label></a>
         </div>
             <form class="form-inline my-2 my-lg-0">
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -36,7 +37,7 @@
                     <button id="btnGroupDrop2" type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
                         <a class="dropdown-item" href="#">Settings</a>
-                        <a class="dropdown-item" href="#">Logout</a>
+                        <a class="dropdown-item" href="register.php" onclick="logout()">Logout</a>
                     </div>
                     </div>
                 </div>
@@ -54,8 +55,8 @@
         <div class="col-md-8">
             <div>
             <header>Share Post</header>
-            <textarea id="captian" cols="50" rows="1" placeholder="Captian"></textarea>
-            <textarea id="pdata" cols="50" rows="5" placeholder="Something in your mind !!"></textarea>
+            <!-- <textarea id="caption" cols="50" rows="1" placeholder="caption"></textarea> -->
+            <textarea id="caption" cols="50" rows="5" placeholder="Something in your mind !!"></textarea>
 
             <FOOTER>
                 <div class="row">
@@ -71,17 +72,21 @@
                     </select>
                 </div>
                 <div class="col-md-8">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Clear</button>
-                    <button type="button" class="btn " style="background-color: #EF3B3A; color: #FFFFFF;">POST</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="clear_post()">Clear</button>
+                    <button type="button" class="btn " style="background-color: #EF3B3A; color: #FFFFFF;" onclick="new_post()">POST</button>
                 </div>
                 </div>
-                
-                
 
             </FOOTER>
 
-            </div>  
+            <div class="alert alert-dismissible alert-success" id="post_not" style="display: none;">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Done!</strong> Your Post succefully posted.
+            </div>
 
+
+            </div>  
+            <p id="test"></p>
 
         </div>
         
@@ -90,7 +95,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+   <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
@@ -102,39 +107,86 @@
 
 <script>
 
- var user="usrname": localStorage.getItem("name");
+// MUST ATTACHED FUNCTIONS 
+
+function logo(){
+    if(localStorage.getItem("id")){
+        window.location = "/Social/views/home.php";
+    }
+    else {
+        window.location = "/Social/views/register.php";
+    }
+}
+
+
+ function logout(){
+        localStorage.setItem("id", "");
+    }
 
 
  $.ajax({
-                type: "POST",
-                url: "/social/controllers/home-controller.php",
-                data: {
-                    "userid": localStorage.getItem("id")
-                },
-                dataType: "application/json"
-            })
+    type: "POST",
+    url: "/Social/controllers/home-controller.php",
+    data: {
+        "userid": localStorage.getItem("id")
+    },
+    dataType: "application/json"
+})
+
             .complete(function(res){
                 console.log(res);
                 var res = JSON.parse(res.responseText);
                 console.log(res);
-                usrname=res.fName;
         
-                document.getElementById("usrname").innerHTML = user;
+                document.getElementById("usrname").innerHTML = res.fName;
            
             })
 
 
+// END OF MUST ATTACHED FUNCTIONS 
+
+    function clear_post(){
+        
+        document.getElementById("caption").value = "";
+
+    }
+
     function new_post(){
 
-        var state;
-        var caption;
-        var pdata;
+        var state_o =  document.getElementById("privacy-select");
+        var state = state_o.options[state_o.selectedIndex].text;
+        var caption = document.getElementById("caption").value;
+        var usrname = document.getElementById("usrname").innerHTML;
+
+        // document.getElementById("test").innerHTML = caption + state + usrname;
+
+        $.ajax({
+            type: "POST",
+            url: "/Social/controllers/post-controller.php",
+            data: {
+               "state" : state,
+               "caption" : caption,
+               "userid": localStorage.getItem("id")
+
+            },
+            dataType: "application/json"
+        })
+        .complete(function (res) {
+                console.log(res);
+                if(res = "true"){
+                    $('#post_not').fadeIn(2200);
+                    $('#post_not').fadeOut(2200);
+                    clear_post();
+                }
+            })
 
 
 
     }
 
 
+
 </script>
+
 
 </html>

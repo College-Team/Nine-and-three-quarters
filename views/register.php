@@ -26,12 +26,36 @@
   
 <div class="container">
   <div class="info">
-    <h1>sign in</h1>
+    <h1 style="color:red;">Welcome to Hogwarts Common Room </h1>
   </div>
 </div>
 <div class="form">
-  <div class="thumbnail"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/hat.svg"/></div>
-
+  
+<div class="thumbnail">
+<img src="https://i.pinimg.com/736x/3c/24/6b/3c246b53c2e1659092a59bd121a4e0b5--family-crest-book-fandoms.jpg" class="portrait" alt="Image" />
+</div>
+<style>
+    .thumbnail {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+.thumbnail img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: auto;
+  -webkit-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+   transform: translate(-50%,-50%);
+}
+.thumbnail img.portrait {
+  width: 100%;
+  height: auto;
+}
+</style>
   <!-- action="/college/controllers/create-new-user.php" method="POST" -->
   <form class="register-form" >
     <input id="firstname" type="text" placeholder="firstname" name="firstname"/>
@@ -44,7 +68,7 @@
       <input id="radio1" name="radio" type="radio" value=1 class="custom-control-input" onclick="selctgen(this.value)" >
       <span class="custom-control-indicator"></span>
       <span class="custom-control-description">Male</span>
-    </label>
+    </label>    
     <label class="custom-control custom-radio">
       <input id="radio2" name="radio" type="radio" value=2 class="custom-control-input" onclick="selctgen(this.value)" >
       <span class="custom-control-indicator"></span>
@@ -59,8 +83,8 @@
   </form>
 
   <form class="login-form">
-      <input id = "email2" type="text" placeholder="email2" name= "email2"/>
-      <input id = "pass2" type="password" placeholder="password" name= "pass2"/>
+      <input id = "email2" type="text" placeholder="email" name= "email2"/>
+      <input id = "pass2" type="password" placeholder="password" name="pass2"/>
       <button id="signin-button" type="button">login</button>
       <p class="message">Not registered? <a href="#">Create an account</a></p>
     </form>
