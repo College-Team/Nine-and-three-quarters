@@ -86,7 +86,7 @@
 
 
             </div>  
-            <p id="test"></p>
+            <p id="posts"></p>
 
         </div>
         
@@ -145,13 +145,46 @@ function logo(){
 
 // END OF MUST ATTACHED FUNCTIONS 
 
+
+$.ajax({
+                type: "POST",
+                url: "/Social/controllers/home-posts_controller.php",
+                data: {
+                    "userid": localStorage.getItem("id")
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
+
+
+        for(i = res.length-1; i >= 0 ; i--){
+
+            p = '<div class="card border-primary mb-3">';
+            p += '<div class="card-header"><strong>' + res[i]["f_name"] + " " + res[i]["l_name"]  + '</strong>  <p>' + res[i]["post_date"] + '</p>'+ res[i]["state"] + '</div>';
+            p += '<div class="card-body text-primary">';
+            p += '<p class="card-text">' + res[i]["caption"] + '</p>';
+            p += '</div>';
+            p += '<div class="card-footer">';
+            p += '<span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;"><a>like</a></span>';
+            p += '</div>';
+            p += '</div>';
+
+            document.getElementById("posts").innerHTML += p ;
+        }
+                })
+
+
+
     function clear_post(){
         
         document.getElementById("caption").value = "";
 
     }
 
-    function new_post(){
+      function new_post(){
 
         var state_o =  document.getElementById("privacy-select");
         var state = state_o.options[state_o.selectedIndex].text;
@@ -181,6 +214,7 @@ function logo(){
             })
 
 
+       
 
     }
 

@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel='stylesheet' href='./Styles/bootstrap.min.css' />
     <link rel='stylesheet' href='./Styles/bootstrap.css' />
-    
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -50,7 +49,7 @@ button {
 <body >
 
  <!-- navigation bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light  ">
         <a class="navbar-brand" onclick="logo()">HOGWARTS COMMON ROOM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -60,7 +59,7 @@ button {
             <input class="form-control mr-sm-2" type="text" placeholder="Search">
         </div>
 
-        <div class="col-md-2 offset-md-2">
+        <div class="col-md-2 offset-md-2 ">
             <a href="profile.php"><img src="profile-photo.jpg" height="50px"/></a>
             &nbsp;&nbsp;
             <a href="profile.php"><label id="usrname"></label></a>
@@ -81,20 +80,13 @@ button {
 
 
 
-<div class="jumbotron container-fluid" id="list">
-<div id="slot" class="row justify-content-around">
 
-<h3 class="col-4">nouran  </h3>
 
-<button class="col-1">Unfriend</button>
-</div>
 
-<div id="slot" class="row justify-content-around">
+<div>
 
-<h3 class="col-4">nouran  </h3>
+<p id="my_friends"></p>
 
-<button class="col-1">Unfriend</button>
-</div>
 </div>
 
 
@@ -122,7 +114,7 @@ function logo(){
     console.log(localStorage.getItem("id"));
  $.ajax({
     type: "POST",
-    url: "/Social/controllers/home-controller.php",
+    url: "/Social/controllers/control-friends.php",
     data: {
         "userid": localStorage.getItem("id")
     },
@@ -133,13 +125,71 @@ function logo(){
                 console.log(res);
                 var res = JSON.parse(res.responseText);
                 console.log(res);
-        
-                document.getElementById("usrname").innerHTML = res.fName;
+                
+                
+
+                for(i=0; i < res.length; i++){
+                    p = '<div id="slot" class="row justify-content-around">';
+                    if(res[i]["n_name"])
+                   { 
+                    p += '<h3 class="col-4">' +  res[i]["f_name"] + " " + res[i]["l_name"] + "(" +res[i]["n_name"] +")" +'</h3>'
+                   }
+                   else {p += '<h3 class="col-4">' +  res[i]["f_name"] + " " + res[i]["l_name"] + '</h3>'}
+                   p+='<button class="col-1" value="'+res[i]["user_id"]+'" id="'+ res[i]["user_id"] +'e'+'" onclick="unfriend(this.value)">Unfriend</button>';
+                //    p += '<button class="col-1" value="'+res[i]["user_id"]+'" id="'+ res[i]["user_id"] +'"onclick="unfriend(this.value) ">Add friend</button>';
+                   p+='</div>';
+
+                   document.getElementById("my_friends").innerHTML += p;
+                }
+               
            
             })
 
+            $.ajax({
+                type: "POST",
+                url: "/Social/controllers/control_profile.php",
+                data: {
+                    "userid": localStorage.getItem("id")
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
+
+                firstname=res.fName;
+
+                document.getElementById("usrname").innerHTML = firstname;
+
+            
+            })        
 
 // END OF MUST ATTACHED FUNCTIONS 
+
+function unfriend(unfriend_id){
+
+    $.ajax({
+    type: "POST",
+    url: "/Social/controllers/unfriend-control.php",
+    data: {
+        "userid": localStorage.getItem("id"),
+        "friend_id" : unfriend_id
+    },
+    dataType: "application/json"
+})
+
+                .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
+            })
+            // var i = unfriend_id+"e";
+            // $('#'i).fadeIn(2200);
+            // $(unfriend_id).fadeOut(2200);
+
+}
+
 
 </script>
 
