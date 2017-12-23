@@ -74,22 +74,22 @@
             </form>
     </nav>
 
-    <div class ="row container">
+  <div class ="row container">
     <div class  ="col-sm-4 container-fluid jumbotron" >
-<div class  ="well">
+    <div class  ="well">
     <h3><span id="fN"></span>  <span id="lN"></span> </h3>
     <h4><span id="nN"></span></h4>
     <p><strong>Gender :</br> </strong><span id="gender"></span></p>
     <p><strong>Date of birth :</br> </strong><span id="bDate"></span></p>
     <p><strong>Marital Status :</br> </strong><span id="mStatus"></span></p>
     <p><strong>HomeTown : </br></strong><span id="homeTown"></span></p>
-    <p><strong>About me : </br></strong>i am dead<span id="about"></span></p>
+    <p><strong>About me : </br></strong><span id="about"></span></p>
+    <button class="button" align="right" id="edit">Edit</button>
     </div>
 <div>
 <button class="button" id="friends">Friends</button>
 </div>
 </div>
-
 
     <div class  ="col-sm-8 container-fluid" id="posts_cont">
         
@@ -115,13 +115,15 @@
         </div> 
 
 
-       <!--  <div class="card border-primary mb-3">
+        <!-- <div class="card border-primary mb-3">
           <div class="card-header"><strong name="n"></strong>  <p>TIMESTAMP</p></div>
           <div class="card-body text-primary">
             <p class="card-text">The Post Caption.</p>
           </div>
           <div class="card-footer">
-            <span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;"><a>like</a></span>
+            <span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;" value="6" onclick="like(this.value)" ><a>like</a></span>
+            <button type="button" class="btn btn-primary" value="5" onclick="like(this.value)">Test button</button>
+
           </div>
         </div> -->
         <p id="test"></p>
@@ -193,25 +195,6 @@ var about;
                 document.getElementById("usrname").innerHTML = res.fName;
             })
 
-/* $.ajax({
-                type: "POST",
-                url: "/Social/controllers/show_posts-controller.php",
-                data: {
-                    "userid": localStorage.getItem("id")
-                },
-                dataType: "application/json"
-            })
-            .complete(function(res){
-                console.log(res);
-                var res = JSON.parse(res.responseText);
-                console.log(res);
-
-              
-
-                document.getElementById("test").innerHTML = res[0]["state"];
-
-    
-            })*/
 
 
  $.ajax({
@@ -230,17 +213,19 @@ var about;
 
         for(i = res.length-1; i >= 0 ; i--){
 
-            p = '<div class="card border-primary mb-3">';
-            p += '<div class="card-header"><strong name="n"></strong>  <p>' + res[i]["post_date"] + '</p>'+ res[i]["state"] + '</div>';
+            p = '<div class="card border-primary mb-3" id="'+  res[i]["post_id"] +'d">';
+            p += '<div class="card-header"><span><strong name="n"></strong></span><div align="right"><a onclick="delete_post('+ res[i]["post_id"] + ')">X</a></div>  <p>' + res[i]["post_date"] + '</p>'+ res[i]["state"] + ' </div>';
             p += '<div class="card-body text-primary">';
             p += '<p class="card-text">' + res[i]["caption"] + '</p>';
             p += '</div>';
             p += '<div class="card-footer">';
-            p += '<span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;"><a>like</a></span>';
+            p += '<span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;" id="'+  res[i]["post_id"] +'" onclick="like(this.id)">like</span> <p id="nol"></p>';
+            p += '<span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;" id="'+  res[i]["post_id"] +'e">unlike</span> <p id="nol"></p>';
             p += '</div>';
             p += '</div>';
 
             document.getElementById("test").innerHTML += p ;
+            $('#' + res[i]["post_id"] + "e").hide();
         }
                 
 
@@ -252,14 +237,84 @@ var about;
                 }
      
             })
+            
 
- 
+    function like(post_id){
+                console.log(post_id);
+
+         $.ajax({
+                type: "POST",
+                url: "/Social/controllers/control_like.php",
+                data: {
+                    "post_id": post_id,
+                    "liker_id" : localStorage.getItem("id")
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
+                
+                    var notif = res["f_name"] + " " + res["l_name"] + " Liked your post"
+                    console.log(notif);
+
+                    $('#' + post_id).hide();
+                    $('#' + post_id + 'e').show();
+                    // document.getElementById(bt).
+                    // document.getElementById("nol").innerHTML = res["count"]
+        
+            
+            });
+        }
+
+        function delete_post(post_id){
+
+            console.log(post_id);
+
+            // id = post_id+'d';
+            // var div = document.getElementById(id);
+            // console.log(id);
+            // var p = "<p> hello </p>";
+            // // div.parentNode.replaceChild(p, div);
+            // // div.replacewith(p);
+            // div.innerHTML = p ;
+
+            $.ajax({
+                type: "POST",
+                url: "/Social/controllers/delete-post_controller.php",
+                data: {
+                    "post_id": post_id
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+
+                p = '<div class="alert alert-dismissible alert-success" id="post_not" >'
+                p += '<button type="button" class="close" data-dismiss="alert">&times;</button>'
+                p += '<strong>Done!</strong> Your Post has been deleted!'
+                p += '</div>'
+
+                id = post_id+'d';
+                document.getElementById(id).innerHTML = p;
+                $('#'+id).fadeOut(2200);
+                
+        
+            
+            });
+        }
+
 
             $('#friends').click(function () {
 
                 // localStorage.setItem("id", "userid");
                 location.href = "/Social/views/friends.php"
-            });
+            })
+
+            $('#edit').click(function () {
+             location.href = "/Social/views/editProfile.php"
+            })
 
 </script>
 </html>

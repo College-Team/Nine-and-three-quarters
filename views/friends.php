@@ -132,9 +132,9 @@ function logo(){
                     p = '<div id="slot" class="row justify-content-around">';
                     if(res[i]["n_name"])
                    { 
-                    p += '<h3 class="col-4">' +  res[i]["f_name"] + " " + res[i]["l_name"] + "(" +res[i]["n_name"] +")" +'</h3>'
+                    p += '<h3 class="col-4">' + '<a id="'+  res[i]["user_id"] + 'f" onclick="goto_friend(this.id)">' +  res[i]["f_name"] + " " + res[i]["l_name"] + "(" +res[i]["n_name"] +")" +'</a> </h3>'
                    }
-                   else {p += '<h3 class="col-4">' +  res[i]["f_name"] + " " + res[i]["l_name"] + '</h3>'}
+                   else {p += '<h3 class="col-4" >' + '<a id="'+  res[i]["user_id"] + 'f" onclick="goto_friend(this.id)">' +  res[i]["f_name"] + " " + res[i]["l_name"] + '</a> </h3>'}
                    p+='<button class="col-1" value="'+res[i]["user_id"]+'" id="'+ res[i]["user_id"] +'e'+'" onclick="unfriend(this.value)">Unfriend</button>';
                 //    p += '<button class="col-1" value="'+res[i]["user_id"]+'" id="'+ res[i]["user_id"] +'"onclick="unfriend(this.value) ">Add friend</button>';
                    p+='</div>';
@@ -166,6 +166,14 @@ function logo(){
             })        
 
 // END OF MUST ATTACHED FUNCTIONS 
+
+function goto_friend(f_id){
+
+    friend_id = f_id.slice(0, -1);
+    localStorage.setItem("friend_id", friend_id);
+    location.href="/Social/views/vistor.php";
+}
+
 
 function unfriend(unfriend_id){
 

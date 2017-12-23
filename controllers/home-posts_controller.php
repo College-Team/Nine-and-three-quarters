@@ -3,7 +3,7 @@ $user_Id = $_POST['userid'];
 
 //TODO: CHECK USER EMAIL EXIST FIRST
 $conn = new mysqli("localhost", "root", "root", "labfinal");
-$qury = "SELECT * from users join (posts JOIN friends ON posts.u_id = friends.friend_id) on users.user_id = friends.friend_id;";
+$qury = "SELECT * from users join (posts JOIN friends ON posts.u_id = friends.friend_id on users.user_id = friends.friend_id;";
 $result = $conn->query($qury);
 
 // echo($result);
