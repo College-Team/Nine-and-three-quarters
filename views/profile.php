@@ -54,8 +54,12 @@
         <div class="collapse navbar-collapse col-md-6" id="navbarColor01">
             <input class="form-control mr-sm-2" type="text" placeholder="Search">
         </div>
-
-        <div class="col-md-2 offset-md-2">
+        <div class="col-sm-2">
+            <a onclick="show_notif()"><img src="not.png" width="25px"/></a>
+            <a href="friend-requests.php"><img src="friend.png" width="45px"/> <p id="friends_no" style="display:inline;"> 25</p>  </a>
+            
+        </div>
+        <div class="col-md-2">
             <a href="profile.php"><img src="profile-photo.jpg" height="50px"/></a>
             &nbsp;&nbsp;
             <a href="profile.php"><label id="usrname"></label></a>
@@ -305,6 +309,57 @@ var about;
             });
         }
 
+        function show_notif(){
+
+
+
+         $.ajax({
+                type: "POST",
+                url: "/Social/controllers/notification_controller.php",
+                data: {
+                    "user_id" : localStorage.getItem("id")
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
+                
+        
+            
+            });
+        }
+
+
+        $.ajax({
+                type: "POST",
+                url: "/Social/controllers/friend-request-not_controller.php",
+                data: {
+                    "user_id" : localStorage.getItem("id")
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
+                
+                document.getElementById("friends_no").innerHTML = res.length;
+                
+            });
+       
+
+
+
+
+        function show_friend(){
+
+
+        }
+        
+
+
 
             $('#friends').click(function () {
 
@@ -315,6 +370,49 @@ var about;
             $('#edit').click(function () {
              location.href = "/Social/views/editProfile.php"
             })
+
+
+
+    function clear_post(){
+        
+        document.getElementById("caption").value = "";
+
+    }
+
+      function new_post(){
+
+        var state_o =  document.getElementById("privacy-select");
+        var state = state_o.options[state_o.selectedIndex].text;
+        var caption = document.getElementById("caption").value;
+        var usrname = document.getElementById("usrname").innerHTML;
+
+        // document.getElementById("test").innerHTML = caption + state + usrname;
+
+        $.ajax({
+            type: "POST",
+            url: "/Social/controllers/post-controller.php",
+            data: {
+               "state" : state,
+               "caption" : caption,
+               "userid": localStorage.getItem("id")
+
+            },
+            dataType: "application/json"
+        })
+        .complete(function (res) {
+                console.log(res);
+                if(res = "true"){
+                    $('#post_not').fadeIn(2200);
+                    $('#post_not').fadeOut(2200);
+                    clear_post();
+                }
+            })
+
+
+       
+
+    }
+
 
 </script>
 </html>

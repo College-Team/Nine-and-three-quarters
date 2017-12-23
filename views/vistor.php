@@ -79,7 +79,7 @@
     <div class="alert alert-dismissible alert-warning" id= "friend_warning-div" style="display:none;">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <p class="mb-0" id="friend_warning"></p>
-        <button type="button" class="btn btn-info" style="margin:5px;">add as a friend</button>
+        <button type="button" class="btn btn-info" id="friend_request" style="margin:5px;" onclick="add_friend()">add as a friend</button>
     </div>
 
 
@@ -203,8 +203,8 @@ var lastname;
 
                 document.getElementById("bDate").innerHTML = bdata;
                 document.getElementById("about").innerHTML = about;
-                document.getElementById("friend_warning").innerHTML = "You and " +  firstname + " " + lastname + "aren't Friends. "
-                $('#friend_warning-div').show();
+                // document.getElementById("friend_warning").innerHTML = "You and " +  firstname + " " + lastname + "aren't Friends. "
+                // $('#friend_warning-div').show();
 
                 }
                 else{
@@ -312,6 +312,31 @@ var lastname;
        searchText=null;
        
     });
+
+
+    function add_friend(){
+        console.log(localStorage.getItem("id"));    
+        console.log(localStorage.getItem("friend_id"));
+
+        $.ajax({
+                type: "POST",
+                url: "/Social/controllers/friend-request_controller.php",
+                data: {
+                    "user_id": localStorage.getItem("id"),
+                    "friend_id" : localStorage.getItem("friend_id")
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+                // var res = JSON.parse(res.responseText);
+                // console.log(res);
+                
+                document.getElementById("friend_warning").innerHTML = "Friend Request Sent "
+                document.getElementById("friend_request").innerHTML = "Unfriend";
+            
+            });
+        }
 
 
 </script>
