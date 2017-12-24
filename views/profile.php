@@ -9,13 +9,14 @@
 <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'>
 <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat:400,700'>
 <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
-<link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="./Styles/bootstrap.min.css">
 <link rel="stylesheet" href="./Styles/bootstrap.css">
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- <script  src="index.js"></script> -->
 
 <style>
@@ -51,7 +52,7 @@
     <span class="navbar-toggler-icon"></span>
     </button>
 
-        <div class="collapse navbar-collapse col-md-6" id="navbarColor01">
+        <div class="collapse navbar-collapse col-md-4" id="navbarColor01">
             <input class="form-control mr-sm-2" type="text" placeholder="Search">
         </div>
         <div class="col-sm-2">
@@ -80,7 +81,7 @@
 
   <div class ="row container">
     <div class  ="col-sm-4 container-fluid jumbotron" >
-    <div class  ="well">
+    <div class  ="well" style="margin: 25px;">
     <h3><span id="fN"></span>  <span id="lN"></span> </h3>
     <h4><span id="nN"></span></h4>
     <p><strong>Gender :</br> </strong><span id="gender"></span></p>
@@ -94,11 +95,10 @@
 <button class="button" id="friends">Friends</button>
 </div>
 </div>
-
     <div class  ="col-sm-8 container-fluid" id="posts_cont">
         
            
-         <div class="card border-primary mb-3">
+         <div class="card border-primary mb-3" style="margin-top: 15px;">
           <div class="card-header"><strong name="n"></strong>  <p>NOW</p> 
              <div class="form-group col-sm-3">
                     <select class="form-control" id="privacy-select">

@@ -65,12 +65,12 @@
     <p id="gender"></p>
     <div class="form-group">
     <label class="custom-control custom-radio">
-      <input id="radio1" name="radio" type="radio" value=1 class="custom-control-input" onclick="selctgen(this.value)" >
+      <input id="radio1" name="radio" type="radio" value=male class="custom-control-input" onclick="selctgen(this.value)" >
       <span class="custom-control-indicator"></span>
       <span class="custom-control-description">Male</span>
     </label>    
     <label class="custom-control custom-radio">
-      <input id="radio2" name="radio" type="radio" value=2 class="custom-control-input" onclick="selctgen(this.value)" >
+      <input id="radio2" name="radio" type="radio" value=female class="custom-control-input" onclick="selctgen(this.value)" >
       <span class="custom-control-indicator"></span>
       <span class="custom-control-description">Female</span>
     </label>
@@ -133,8 +133,6 @@ $('#signin-button').click(function () {
     function validateRegistrationForm() {
         
         var gender = document.getElementById("gender").innerHTML;
-        // var male= document.getElementById("radio1").value;
-        // var female= document.getElementById("radio2").value;
         var userFName = document.getElementById("firstname").value;
         var userLName = document.getElementById("lastname").value;
         var userEmail = document.getElementById("email").value;

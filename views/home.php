@@ -5,27 +5,39 @@
     <title> SOCIAL </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel='stylesheet' href='./Styles/bootstrap.min.css' />
-    <link rel='stylesheet' href='./Styles/bootstrap.css' />
-    
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'>
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat:400,700'>
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="./Styles/bootstrap.min.css">
+<link rel="stylesheet" href="./Styles/bootstrap.css">
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- <link rel="icon" type="image/png" href="my_site_icon.png" sizes="16x16"> -->
 </head>
 
 <body>
     
     <!-- navigation bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" onclick="logo()">HOGWARTS COMMON ROOM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
 
-        <div class="collapse navbar-collapse col-md-6" id="navbarColor01">
+        <div class="collapse navbar-collapse col-md-4" id="navbarColor01">
             <input class="form-control mr-sm-2" type="text" placeholder="Search">
         </div>
-
-        <div class="col-md-2 offset-md-2">
+        <div class="col-sm-2">
+            <a onclick="show_notif()"><img src="not.png" width="25px"/></a>
+            <a href="friend-requests.php"><img src="friend.png" width="45px"/> <p id="friends_no" style="display:inline;"> 25</p>  </a>
+            
+        </div>
+        <div class="col-md-2">
             <a href="profile.php"><img src="profile-photo.jpg" height="50px"/></a>
             &nbsp;&nbsp;
             <a href="profile.php"><label id="usrname"></label></a>
@@ -96,8 +108,6 @@
 
     <!-- Scripts -->
    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
 </body>
 
@@ -212,11 +222,24 @@ $.ajax({
                     clear_post();
                 }
             })
-
-
-       
-
     }
+
+ $.ajax({
+                type: "POST",
+                url: "/Social/controllers/friend-request-not_controller.php",
+                data: {
+                    "user_id" : localStorage.getItem("id")
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
+                
+                document.getElementById("friends_no").innerHTML = res.length;
+                
+            });
 
 
 
