@@ -65,12 +65,12 @@
     <p id="gender"></p>
     <div class="form-group">
     <label class="custom-control custom-radio">
-      <input id="radio1" name="radio" type="radio" value=male class="custom-control-input" onclick="selctgen(this.value)" >
+      <input id="radio1" name="radio" type="radio" value="male" class="custom-control-input" onclick="selctgen(this.value)" >
       <span class="custom-control-indicator"></span>
       <span class="custom-control-description">Male</span>
     </label>    
     <label class="custom-control custom-radio">
-      <input id="radio2" name="radio" type="radio" value=female class="custom-control-input" onclick="selctgen(this.value)" >
+      <input id="radio2" name="radio" type="radio" value="female" class="custom-control-input" onclick="selctgen(this.value)" >
       <span class="custom-control-indicator"></span>
       <span class="custom-control-description">Female</span>
     </label>

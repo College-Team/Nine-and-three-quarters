@@ -98,7 +98,7 @@ $.ajax({
                 console.log(res);
                 var res = JSON.parse(res.responseText);
                 for(var k in res){
-                    html+="<div> ";
+                    html+='<div id="'+ res[k]["user_id"] +'" onclick="goto_friend(this.id)"> ';
                   html+=res[k]["f_name"]
                   html+="    ";
                   html+=res[k]["l_name"]
@@ -156,6 +156,12 @@ function logout(){
         localStorage.setItem("id", "");
     }
 
+function goto_friend(friend_id){
+
+   
+    localStorage.setItem("friend_id", friend_id);
+    location.href="/Social/views/vistor.php";
+}
 
 $.ajax({
     type: "POST",

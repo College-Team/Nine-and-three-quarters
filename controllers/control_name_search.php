@@ -3,7 +3,7 @@ $searchText=$_POST['searchText'];
 //$user_Id = $_POST['userid'];
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "root";
 $dbname = "labfinal";
 
 
@@ -19,7 +19,6 @@ else {
     $rows = array();
 	while($r = mysqli_fetch_assoc($result)) {
     	$rows[] = $r;
-    	// $rows[] = array('data' => $r);
 }
 header('Content-type: application/json');
 echo json_encode($rows);
