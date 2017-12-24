@@ -30,7 +30,7 @@
     </button>
 
         <div class="collapse navbar-collapse col-md-4" id="navbarColor01">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <input class="form-control mr-sm-2" type="text" id="textField" placeholder="Search"><button class="button" id="search">GO!</button>
         </div>
         <div class="col-sm-2">
             <a onclick="show_notif()"><img src="not.png" width="25px"/></a>
@@ -241,7 +241,16 @@ $.ajax({
                 
             });
 
-
+$('#search').click(function () {
+       var searchText= document.getElementById("textField").value;
+       console.log(searchText);
+       //console.log(document.getElementById("textField").value);
+       //console.log (searchText);
+       localStorage.setItem("sText", searchText);
+       location.href = "/Social/views/searchResult.php"
+       searchText=null;
+       
+    });
 
 </script>
 

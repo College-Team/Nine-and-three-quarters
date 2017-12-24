@@ -53,7 +53,8 @@
     <span class="navbar-toggler-icon"></span>
     </button>
 
-         <div class="collapse navbar-collapse col-md-6" id="navbarColor01">
+        
+        <div class="collapse navbar-collapse col-md-4" id="navbarColor01">
             <input class="form-control mr-sm-2" type="text" id="textField" placeholder="Search"><button class="button" id="search">GO!</button>
         </div>
 
@@ -340,6 +341,16 @@ var lastname;
             });
         }
 
+$('#search').click(function () {
+       var searchText= document.getElementById("textField").value;
+       console.log(searchText);
+       //console.log(document.getElementById("textField").value);
+       //console.log (searchText);
+       localStorage.setItem("sText", searchText);
+       location.href = "/Social/views/searchResult.php"
+       searchText=null;
+       
+    });
 
 </script>
 </html>

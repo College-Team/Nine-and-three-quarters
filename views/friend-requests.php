@@ -48,18 +48,19 @@ button {
 </head>
 <body>
        <!-- navigation bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <!-- navigation bar -->
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" onclick="logo()">HOGWARTS COMMON ROOM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
 
-        <div class="collapse navbar-collapse col-md-6" id="navbarColor01">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+        <div class="collapse navbar-collapse col-md-4" id="navbarColor01">
+            <input class="form-control mr-sm-2" type="text" id="textField" placeholder="Search"><button class="button" id="search">GO!</button>
         </div>
         <div class="col-sm-2">
             <a onclick="show_notif()"><img src="not.png" width="25px"/></a>
-            <a href="friend-requests.php"onclick="show_friend()"><img src="friend.png" width="45px"/> <p id="friends_no" style="display:inline;"> 25</p>  </a>
+            <a href="friend-requests.php"><img src="friend.png" width="45px"/> <p id="friends_no" style="display:inline;"> 25</p>  </a>
             
         </div>
         <div class="col-md-2">
@@ -241,6 +242,18 @@ function ignore_friend(friend_id){
             })
 
     }
+
+
+    $('#search').click(function () {
+       var searchText= document.getElementById("textField").value;
+       console.log(searchText);
+       //console.log(document.getElementById("textField").value);
+       //console.log (searchText);
+       localStorage.setItem("sText", searchText);
+       location.href = "/Social/views/searchResult.php"
+       searchText=null;
+       
+    });
 
 </script>
 

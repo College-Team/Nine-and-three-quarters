@@ -2,34 +2,44 @@
 <html lang="en">
 
 <head>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
-     <script src="http://malsup.github.com/jquery.form.js"></script> 
-
-	 <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<html>
+<head>
+<meta charset="UTF-8">
+  <title>welcome</title>
   
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel='stylesheet' href='./Styles/bootstrap.min.css' />
-    <link rel='stylesheet' href='./Styles/bootstrap.css' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'>
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat:400,700'>
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="./Styles/bootstrap.min.css">
+<link rel="stylesheet" href="./Styles/bootstrap.css">
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <script  src="index.js"></script> -->
  </head>
 
 
 <body>
     <!-- site search navigation bar  -->
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" onclick="logo()">HOGWARTS COMMON ROOM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
 
-        <div class="collapse navbar-collapse col-md-6" id="navbarColor01">
+       
+        <div class="collapse navbar-collapse col-md-4" id="navbarColor01">
             <input class="form-control mr-sm-2" type="text" id="textField" placeholder="Search"><button class="button" id="search">GO!</button>
         </div>
-
-        <div class="col-md-2 offset-md-2">
+        <div class="col-sm-2">
+            <a onclick="show_notif()"><img src="not.png" width="25px"/></a>
+            <a href="friend-requests.php"><img src="friend.png" width="45px"/> <p id="friends_no" style="display:inline;"> 25</p>  </a>
+            
+        </div>
+        <div class="col-md-2">
             <a href="profile.php"><img src="profile-photo.jpg" height="50px"/></a>
             &nbsp;&nbsp;
             <a href="profile.php"><label id="usrname"></label></a>
@@ -47,7 +57,8 @@
                 </div>
             </form>
     </nav>
-    <!-- search result navigation bar  -->
+
+   <!-- search result navigation bar  -->
 
 <div  style="background-color:rgb(30,40,50);" >
 <ul class="nav nav-pills">
@@ -131,8 +142,68 @@ $.ajax({
                 
                 });
                
-            
+
+function logo(){
+    if(localStorage.getItem("id")){
+        window.location = "/Social/views/home.php";
+    }
+    else {
+        window.location = "/Social/views/register.php";
+    }
+}
+
+function logout(){
+        localStorage.setItem("id", "");
+    }
+
+
+$.ajax({
+    type: "POST",
+    url: "/Social/controllers/home-controller.php",
+    data: {
+        "userid": localStorage.getItem("id")
+    },
+    dataType: "application/json"
+})
+
+            .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
         
+                document.getElementById("usrname").innerHTML = res.fName;
+           
+            })       
+
+
+$('#search').click(function () {
+       var searchText= document.getElementById("textField").value;
+       console.log(searchText);
+       //console.log(document.getElementById("textField").value);
+       //console.log (searchText);
+       localStorage.setItem("sText", searchText);
+       location.href = "/Social/views/searchResult.php"
+       searchText=null;
+       
+    });
+
+$.ajax({
+                type: "POST",
+                url: "/Social/controllers/friend-request-not_controller.php",
+                data: {
+                    "user_id" : localStorage.getItem("id")
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
+                
+                document.getElementById("friends_no").innerHTML = res.length;
+                
+            });
+  
    </script>   
 
    </html>

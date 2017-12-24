@@ -9,14 +9,13 @@
 <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'>
 <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat:400,700'>
 <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'>
+<link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="./Styles/bootstrap.min.css">
 <link rel="stylesheet" href="./Styles/bootstrap.css">
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- <script  src="index.js"></script> -->
 
 <style>
@@ -40,6 +39,14 @@
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+#image_data{
+
+padding: 5px 5px 5px 5px;
+width :200px;
+border:2px solid;
+margin-bottom:10px;
+
+}
 </style>
   
 </head>
@@ -52,16 +59,11 @@
     <span class="navbar-toggler-icon"></span>
     </button>
 
-       
-        <div class="collapse navbar-collapse col-md-4" id="navbarColor01">
-            <input class="form-control mr-sm-2" type="text" id="textField" placeholder="Search"><button class="button" id="search">GO!</button>
+        <div class="collapse navbar-collapse col-md-6" id="navbarColor01">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search">
         </div>
-        <div class="col-sm-2">
-            <a onclick="show_notif()"><img src="not.png" width="25px"/></a>
-            <a href="friend-requests.php"><img src="friend.png" width="45px"/> <p id="friends_no" style="display:inline;"> 25</p>  </a>
-            
-        </div>
-        <div class="col-md-2">
+
+        <div class="col-md-2 offset-md-2">
             <a href="profile.php"><img src="profile-photo.jpg" height="50px"/></a>
             &nbsp;&nbsp;
             <a href="profile.php"><label id="usrname"></label></a>
@@ -80,13 +82,14 @@
             </form>
     </nav>
 
-  <div class ="row container">
+    <div class ="row container">
     <div class  ="col-sm-4 container-fluid jumbotron" >
-    <div class  ="well" style="margin: 25px;">
+<div class  ="well">
             <div class="conatiner-fluid" id ="image_data"></div>
 
     <button type= "button" class = "btn btn-success" id = "add">&times; add pic</button>
     <button type= "button" class = "btn btn-success" id = "delete">&times; remove</button>
+
 
     <h3><span id="fN"></span>  <span id="lN"></span> </h3>
     <h4><span id="nN"></span></h4>
@@ -94,17 +97,18 @@
     <p><strong>Date of birth :</br> </strong><span id="bDate"></span></p>
     <p><strong>Marital Status :</br> </strong><span id="mStatus"></span></p>
     <p><strong>HomeTown : </br></strong><span id="homeTown"></span></p>
-    <p><strong>About me : </br></strong><span id="about"></span></p>
-    <button class="button" align="right" id="edit">Edit</button>
+    <p><strong>About me : </br></strong>i am dead<span id="about"></span></p>
     </div>
 <div>
 <button class="button" id="friends">Friends</button>
 </div>
 </div>
+
+
     <div class  ="col-sm-8 container-fluid" id="posts_cont">
         
            
-         <div class="card border-primary mb-3" style="margin-top: 15px;">
+         <div class="card border-primary mb-3">
           <div class="card-header"><strong name="n"></strong>  <p>NOW</p> 
              <div class="form-group col-sm-3">
                     <select class="form-control" id="privacy-select">
@@ -125,15 +129,13 @@
         </div> 
 
 
-        <!-- <div class="card border-primary mb-3">
+       <!--  <div class="card border-primary mb-3">
           <div class="card-header"><strong name="n"></strong>  <p>TIMESTAMP</p></div>
           <div class="card-body text-primary">
             <p class="card-text">The Post Caption.</p>
           </div>
           <div class="card-footer">
-            <span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;" value="6" onclick="like(this.value)" ><a>like</a></span>
-            <button type="button" class="btn btn-primary" value="5" onclick="like(this.value)">Test button</button>
-
+            <span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;"><a>like</a></span>
           </div>
         </div> -->
         <p id="test"></p>
@@ -204,7 +206,6 @@ var about;
                 document.getElementById("about").innerHTML = about;
                 document.getElementById("usrname").innerHTML = res.fName;
             })
-
     $.ajax({
         url:"/Social/controllers/loadPic.php",
         method:"POST",
@@ -217,6 +218,27 @@ var about;
 
 
     })
+
+/* $.ajax({
+                type: "POST",
+                url: "/Social/controllers/show_posts-controller.php",
+                data: {
+                    "userid": localStorage.getItem("id")
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
+
+              
+
+                document.getElementById("test").innerHTML = res[0]["state"];
+
+    
+            })*/
+
 
  $.ajax({
                 type: "POST",
@@ -234,19 +256,17 @@ var about;
 
         for(i = res.length-1; i >= 0 ; i--){
 
-            p = '<div class="card border-primary mb-3" id="'+  res[i]["post_id"] +'d">';
-            p += '<div class="card-header"><span><strong name="n"></strong></span><div align="right"><a onclick="delete_post('+ res[i]["post_id"] + ')">X</a></div>  <p>' + res[i]["post_date"] + '</p>'+ res[i]["state"] + ' </div>';
+            p = '<div class="card border-primary mb-3">';
+            p += '<div class="card-header"><strong name="n"></strong>  <p>' + res[i]["post_date"] + '</p>'+ res[i]["state"] + '</div>';
             p += '<div class="card-body text-primary">';
             p += '<p class="card-text">' + res[i]["caption"] + '</p>';
             p += '</div>';
             p += '<div class="card-footer">';
-            p += '<span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;" id="'+  res[i]["post_id"] +'" onclick="like(this.id)">like</span> <p id="nol"></p>';
-            p += '<span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;" id="'+  res[i]["post_id"] +'e">unlike</span> <p id="nol"></p>';
+            p += '<span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;"><a>like</a></span>';
             p += '</div>';
             p += '</div>';
 
             document.getElementById("test").innerHTML += p ;
-            $('#' + res[i]["post_id"] + "e").hide();
         }
                 
 
@@ -259,176 +279,22 @@ var about;
      
             })
 
-  
-
-
-
-    function like(post_id){
-                console.log(post_id);
-
-         $.ajax({
-                type: "POST",
-                url: "/Social/controllers/control_like.php",
-                data: {
-                    "post_id": post_id,
-                    "liker_id" : localStorage.getItem("id")
-                },
-                dataType: "application/json"
-            })
-            .complete(function(res){
-                console.log(res);
-                var res = JSON.parse(res.responseText);
-                console.log(res);
-                
-                    var notif = res["f_name"] + " " + res["l_name"] + " Liked your post"
-                    console.log(notif);
-
-                    $('#' + post_id).hide();
-                    $('#' + post_id + 'e').show();
-                    // document.getElementById(bt).
-                    // document.getElementById("nol").innerHTML = res["count"]
-        
             
-            });
-        }
-
-        function delete_post(post_id){
-
-            console.log(post_id);
-
-            // id = post_id+'d';
-            // var div = document.getElementById(id);
-            // console.log(id);
-            // var p = "<p> hello </p>";
-            // // div.parentNode.replaceChild(p, div);
-            // // div.replacewith(p);
-            // div.innerHTML = p ;
-
-            $.ajax({
+         /*   $('#submitPic').click(function(){
+               // console.log(localStorage.getItem("id"));
+                var myid= localStorage.getItem("id");
+                //console.log(myid);
+                $.ajax({
                 type: "POST",
-                url: "/Social/controllers/delete-post_controller.php",
+                url: "/Social/views/upload2.php",
                 data: {
-                    "post_id": post_id
+                    "userid": myid
                 },
                 dataType: "application/json"
             })
-            .complete(function(res){
-                console.log(res);
+           location.href= "/Social/views/upload2.php";
 
-                p = '<div class="alert alert-dismissible alert-success" id="post_not" >'
-                p += '<button type="button" class="close" data-dismiss="alert">&times;</button>'
-                p += '<strong>Done!</strong> Your Post has been deleted!'
-                p += '</div>'
-
-                id = post_id+'d';
-                document.getElementById(id).innerHTML = p;
-                $('#'+id).fadeOut(2200);
-                
-        
-            
-            });
-        }
-
-        function show_notif(){
-
-
-
-         $.ajax({
-                type: "POST",
-                url: "/Social/controllers/notification_controller.php",
-                data: {
-                    "user_id" : localStorage.getItem("id")
-                },
-                dataType: "application/json"
-            })
-            .complete(function(res){
-                console.log(res);
-                var res = JSON.parse(res.responseText);
-                console.log(res);
-                
-        
-            
-            });
-        }
-
-
-        $.ajax({
-                type: "POST",
-                url: "/Social/controllers/friend-request-not_controller.php",
-                data: {
-                    "user_id" : localStorage.getItem("id")
-                },
-                dataType: "application/json"
-            })
-            .complete(function(res){
-                console.log(res);
-                var res = JSON.parse(res.responseText);
-                console.log(res);
-                
-                document.getElementById("friends_no").innerHTML = res.length;
-                
-            });
-       
-
-
-
-
-        function show_friend(){
-
-
-        }
-        
-
-
-
-            $('#friends').click(function () {
-
-                // localStorage.setItem("id", "userid");
-                location.href = "/Social/views/friends.php"
-            })
-
-            $('#edit').click(function () {
-             location.href = "/Social/views/editProfile.php"
-            })
-
-
-
-    function clear_post(){
-        
-        document.getElementById("caption").value = "";
-
-    }
-
-      function new_post(){
-
-        var state_o =  document.getElementById("privacy-select");
-        var state = state_o.options[state_o.selectedIndex].text;
-        var caption = document.getElementById("caption").value;
-        var usrname = document.getElementById("usrname").innerHTML;
-
-        // document.getElementById("test").innerHTML = caption + state + usrname;
-
-        $.ajax({
-            type: "POST",
-            url: "/Social/controllers/post-controller.php",
-            data: {
-               "state" : state,
-               "caption" : caption,
-               "userid": localStorage.getItem("id")
-
-            },
-            dataType: "application/json"
-        })
-        .complete(function (res) {
-                console.log(res);
-                if(res = "true"){
-                    $('#post_not').fadeIn(2200);
-                    $('#post_not').fadeOut(2200);
-                    clear_post();
-                }
-            })       
-
-    }
+})*/
 
 
 $('#add').click(function(){
@@ -532,16 +398,4 @@ else{
 
     }
 })
-
-$('#search').click(function () {
-       var searchText= document.getElementById("textField").value;
-       console.log(searchText);
-       //console.log(document.getElementById("textField").value);
-       //console.log (searchText);
-       localStorage.setItem("sText", searchText);
-       location.href = "/Social/views/searchResult.php"
-       searchText=null;
-       
-    });
 </script>
-</html>
