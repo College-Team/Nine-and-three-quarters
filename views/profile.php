@@ -4,7 +4,6 @@
 <head>
 <meta charset="UTF-8">
   <title>welcome</title>
-  
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900'>
 <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat:400,700'>
@@ -16,7 +15,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 <!-- <script  src="index.js"></script> -->
 
 <style>
@@ -40,19 +39,28 @@
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+#image_data{
+
+padding: 5px 5px 5px 5px;
+width :200px;
+border:2px solid;
+margin-bottom:10px;
+
+}
 </style>
   
 </head>
 
+
 <body>
-       <!-- navigation bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+   <!-- navigation bar -->
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" onclick="logo()">HOGWARTS COMMON ROOM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
 
-       
         <div class="collapse navbar-collapse col-md-4" id="navbarColor01">
             <input class="form-control mr-sm-2" type="text" id="textField" placeholder="Search"><button class="button" id="search">GO!</button>
         </div>
@@ -80,13 +88,14 @@
             </form>
     </nav>
 
-  <div class ="row container">
+    <div class ="row container">
     <div class  ="col-sm-4 container-fluid jumbotron" >
-    <div class  ="well" style="margin: 25px;">
+<div class  ="well">
             <div class="conatiner-fluid" id ="image_data"></div>
 
     <button type= "button" class = "btn btn-success" id = "add">&times; add pic</button>
     <button type= "button" class = "btn btn-success" id = "delete">&times; remove</button>
+
 
     <h3><span id="fN"></span>  <span id="lN"></span> </h3>
     <h4><span id="nN"></span></h4>
@@ -95,16 +104,18 @@
     <p><strong>Marital Status :</br> </strong><span id="mStatus"></span></p>
     <p><strong>HomeTown : </br></strong><span id="homeTown"></span></p>
     <p><strong>About me : </br></strong><span id="about"></span></p>
-    <button class="button" align="right" id="edit">Edit</button>
+     <button class="button" align="right" id="edit">Edit</button>
     </div>
 <div>
 <button class="button" id="friends">Friends</button>
 </div>
 </div>
+
+
     <div class  ="col-sm-8 container-fluid" id="posts_cont">
         
            
-         <div class="card border-primary mb-3" style="margin-top: 15px;">
+         <div class="card border-primary mb-3">
           <div class="card-header"><strong name="n"></strong>  <p>NOW</p> 
              <div class="form-group col-sm-3">
                     <select class="form-control" id="privacy-select">
@@ -125,15 +136,13 @@
         </div> 
 
 
-        <!-- <div class="card border-primary mb-3">
+       <!--  <div class="card border-primary mb-3">
           <div class="card-header"><strong name="n"></strong>  <p>TIMESTAMP</p></div>
           <div class="card-body text-primary">
             <p class="card-text">The Post Caption.</p>
           </div>
           <div class="card-footer">
-            <span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;" value="6" onclick="like(this.value)" ><a>like</a></span>
-            <button type="button" class="btn btn-primary" value="5" onclick="like(this.value)">Test button</button>
-
+            <span class="badge badge-pill btn" style="background-color: #EF3B3A; color: #FFFFFF;"><a>like</a></span>
           </div>
         </div> -->
         <p id="test"></p>
@@ -161,6 +170,7 @@ function logout(){
     }
 
 // END OF MUST ATTACHED FUNCTIONS 
+
 
 var firstname;
 var lastname;
@@ -204,7 +214,6 @@ var about;
                 document.getElementById("about").innerHTML = about;
                 document.getElementById("usrname").innerHTML = res.fName;
             })
-
     $.ajax({
         url:"/Social/controllers/loadPic.php",
         method:"POST",
@@ -217,6 +226,27 @@ var about;
 
 
     })
+// ('#'+res[i]["post_id"]+'e').hide();
+/* $.ajax({
+                type: "POST",
+                url: "/Social/controllers/show_posts-controller.php",
+                data: {
+                    "userid": localStorage.getItem("id")
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
+
+              
+
+                document.getElementById("test").innerHTML = res[0]["state"];
+
+    
+            })*/
+
 
  $.ajax({
                 type: "POST",
@@ -246,7 +276,6 @@ var about;
             p += '</div>';
 
             document.getElementById("test").innerHTML += p ;
-            $('#' + res[i]["post_id"] + "e").hide();
         }
                 
 
@@ -259,11 +288,23 @@ var about;
      
             })
 
-  
+            
+         /*   $('#submitPic').click(function(){
+               // console.log(localStorage.getItem("id"));
+                var myid= localStorage.getItem("id");
+                //console.log(myid);
+                $.ajax({
+                type: "POST",
+                url: "/Social/views/upload2.php",
+                data: {
+                    "userid": myid
+                },
+                dataType: "application/json"
+            })
+           location.href= "/Social/views/upload2.php";
 
-
-
-    function like(post_id){
+})*/
+function like(post_id){
                 console.log(post_id);
 
          $.ajax({
@@ -352,45 +393,34 @@ var about;
         }
 
 
-        $.ajax({
+$('#add').click(function(){
+
+    $('#imageModel').modal('show');
+    $('#image_form')[0].reset;
+    $('.model-title').text("ADD IMAGE");
+    $('#image_id').val('');
+    $('#action').val('insert');
+    $('#insert').val('Insert');
+
+})
+$('#delete').click(function(){
+    $.ajax({
                 type: "POST",
-                url: "/Social/controllers/friend-request-not_controller.php",
+                url: "/Social/controllers/removePic.php",
                 data: {
-                    "user_id" : localStorage.getItem("id")
-                },
-                dataType: "application/json"
-            })
-            .complete(function(res){
-                console.log(res);
-                var res = JSON.parse(res.responseText);
-                console.log(res);
+                    "userid": localStorage.getItem("id")},
+                    success:function(data){
+                      //alert(data);
+                     // console.log(data);
+
+             location.href="/Social/views/profile.php"
+             }
+
                 
-                document.getElementById("friends_no").innerHTML = res.length;
-                
-            });
-       
-
-
-
-
-        function show_friend(){
-
-
-        }
-        
-
-
-
-            $('#friends').click(function () {
-
-                // localStorage.setItem("id", "userid");
-                location.href = "/Social/views/friends.php"
             })
 
-            $('#edit').click(function () {
-             location.href = "/Social/views/editProfile.php"
-            })
 
+})
 
 
     function clear_post(){
@@ -399,7 +429,7 @@ var about;
 
     }
 
-      function new_post(){
+function new_post(){
 
         var state_o =  document.getElementById("privacy-select");
         var state = state_o.options[state_o.selectedIndex].text;
@@ -426,52 +456,49 @@ var about;
                     $('#post_not').fadeOut(2200);
                     clear_post();
                 }
-            })       
-
+            })
     }
 
 
-$('#add').click(function(){
 
-    $('#imageModel').modal('show');
-    $('#image_form')[0].reset;
-    $('.model-title').text("ADD IMAGE");
-    $('#image_id').val('');
-    $('#action').val('insert');
-    $('#insert').val('Insert');
-
-s})
-$('#delete').click(function(){
-    $.ajax({
-                type: "POST",
-                url: "/Social/controllers/removePic.php",
-                data: {
-                    "userid": localStorage.getItem("id")},
-                    success:function(){
-
-             location.href="/Social/views/profile.php"
-             }
-
-                
-            })
-
-
-
-
-
-
-})
   $('#friends').click(function () {
 
                 // localStorage.setItem("id", "userid");
                 location.href = "/Social/views/friends.php"
             });
+ $.ajax({
+                type: "POST",
+                url: "/Social/controllers/friend-request-not_controller.php",
+                data: {
+                    "user_id" : localStorage.getItem("id")
+                },
+                dataType: "application/json"
+            })
+            .complete(function(res){
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                console.log(res);
+                
+                document.getElementById("friends_no").innerHTML = res.length;
+                
+            });
 
+
+$('#search').click(function () {
+       var searchText= document.getElementById("textField").value;
+       console.log(searchText);
+       //console.log(document.getElementById("textField").value);
+       //console.log (searchText);
+       localStorage.setItem("sText", searchText);
+       location.href = "/Social/views/searchResult.php"
+       searchText=null;
+       
+    });
 
 </script>
 </html>
 <div id = "imageModel" class = "modal fade" role = "dialog" >
-           <!-- <div class = "modal-dialog">
+            <!--<div class = "modal-dialog">
                 <div class ="modal-header">
                 <button type= "button" class = "close" data-dismiss = "modal">&times; </button>
 
@@ -493,6 +520,7 @@ $('#delete').click(function(){
             </div>
             </div>
 </div>-->
+</div>
 <script>
 
 $('#image_form').submit(function(event){
@@ -533,15 +561,7 @@ else{
     }
 })
 
-$('#search').click(function () {
-       var searchText= document.getElementById("textField").value;
-       console.log(searchText);
-       //console.log(document.getElementById("textField").value);
-       //console.log (searchText);
-       localStorage.setItem("sText", searchText);
-       location.href = "/Social/views/searchResult.php"
-       searchText=null;
-       
-    });
+   $('#edit').click(function () {
+             location.href = "/Social/views/editProfile.php"
+            })
 </script>
-</html>

@@ -13,7 +13,7 @@ create table users(
   marital_status varchar(50) not null,
   home_town varchar(50) not null,
   About_me text ,
-  profile_pic varbinary(256) not null,
+  profile_pic longblob not null,
   PRIMARY KEY(user_id)
 );
  create table phones(

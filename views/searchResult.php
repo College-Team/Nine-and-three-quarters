@@ -62,9 +62,10 @@
 
 <div  style="background-color:rgb(30,40,50);" >
 <ul class="nav nav-pills">
-  <li class="active">
-    <a  data-toggle="pill" href="#result1">People</a></li>
+  <li class="active"><a  data-toggle="pill" href="#result1">People</a></li>
   <li ><a data-toggle="pill" href="#result2">Posts</a></li>
+  <li ><a data-toggle="pill" href="#result3">E-mail</a></li>
+  <li ><a data-toggle="pill" href="#result4">HomeTown</a></li>
   
 </ul>
     </div>
@@ -76,6 +77,12 @@
 	
 	
 	<div id="result2" class="tab-pane fade" > 
+   
+    </div>
+    <div id="result3" class="tab-pane fade" > 
+   
+    </div>
+    <div id="result4" class="tab-pane fade" > 
    
     </div>
     </div>
@@ -141,6 +148,62 @@ $.ajax({
 
                 
                 });
+            $.ajax({
+                type: "POST",
+                url: "/Social/controllers/control_email_search.php",
+                data: {
+                    "searchText": localStorage.getItem("sText")
+                },
+                dataType: "application/json"
+            })
+            .complete(function (res) {
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                for(var k in res){
+                    html1+="<div> ";
+                  html1+=res[k]["f_name"]
+                  html1+="    ";
+                  html1+=res[k]["l_name"]
+                  
+
+                    html1+="</div>";
+
+                    
+                }document.getElementById("result3").innerHTML += html1;
+                console.log(res);
+              
+
+                
+                });
+               
+               $.ajax({
+                type: "POST",
+                url: "/Social/controllers/control_hometown_search.php",
+                data: {
+                    "searchText": localStorage.getItem("sText")
+                },
+                dataType: "application/json"
+            })
+            .complete(function (res) {
+                console.log(res);
+                var res = JSON.parse(res.responseText);
+                for(var k in res){
+                    html1+="<div> ";
+                  html1+=res[k]["f_name"]
+                  html1+="    ";
+                  html1+=res[k]["l_name"]
+                  
+
+                    html1+="</div>";
+
+                    
+                }document.getElementById("result4").innerHTML += html1;
+                console.log(res);
+              
+
+                
+                });
+               
                
 
 function logo(){

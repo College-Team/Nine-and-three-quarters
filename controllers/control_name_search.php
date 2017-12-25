@@ -10,7 +10,7 @@ $dbname = "labfinal";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 
-$qury = "SELECT * FROM users WHERE   f_name LIKE '%$searchText%' OR l_name LIKE '%$searchText%' OR home_town LIKE '%$searchText%' OR email='$searchText';";
+$qury = "SELECT * FROM users WHERE   f_name LIKE '%$searchText%' OR l_name LIKE '%$searchText%' ;";
 $result = $conn->query($qury);
 if($result == null){
     echo "null";

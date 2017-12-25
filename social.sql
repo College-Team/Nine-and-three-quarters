@@ -27,7 +27,7 @@ FOREIGN KEY (u_id)REFERENCES users(user_id)
 );
 create table posts(
 post_id int AUTO_INCREMENT,
-state int,
+state varchar(7),
 caption text not null,
 image varbinary(256),
 post_date timestamp,
